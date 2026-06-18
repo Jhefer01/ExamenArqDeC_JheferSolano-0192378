@@ -1,0 +1,83 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+
+  WebSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Permitir HTTP
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  WebServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+
+      ImageId: ami-0c02fb55956c7d316
+
+      SecurityGroups:
+        - !Ref WebSecurityGroup
+
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+
+          yum update -y
+
+          yum install -y httpd
+
+          systemctl start httpd
+          systemctl enable httpd
+
+          cat > /var/www/html/index.html << 'EOF'
+
+          <!DOCTYPE html>
+          <html>
+
+          <head>
+
+          <title>Examen Final</title>
+
+          <style>
+
+          body{
+            background:#1e1e1e;
+            color:white;
+            text-align:center;
+            font-family:Arial;
+            margin-top:100px;
+          }
+
+          </style>
+
+          </head>
+
+          <body>
+
+          <h1>Jhefer Solano</h1>
+
+          <h2>0192378</h2>
+
+          <h3>Examen Final Arquitectura de Computadores</h3>
+
+          <button onclick="mensaje()">
+          Presióname
+          </button>
+
+          <script>
+
+          function mensaje(){
+             alert("AWS funcionando correctamente");
+          }
+
+          </script>
+
+          </body>
+
+          </html>
+
+          EOF
