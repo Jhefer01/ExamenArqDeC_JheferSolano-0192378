@@ -63,7 +63,9 @@ Resources:
           <h2>0192378</h2>
 
           <h3>Examen Final Arquitectura de Computadores</h3>
-
+          <hr>
+          <h3>Modificación realizada por Daniel Sanguino 0192365</h3>
+          <p>Actividad colaborativa del examen final.</p>
           <button onclick="mensaje()">
           Presióname
           </button>
